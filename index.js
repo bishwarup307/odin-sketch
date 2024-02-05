@@ -28,3 +28,9 @@ function createGrids(canvas, numGrid) {
 }
 
 createGrids(canvas, N_ROW);
+
+canvas.addEventListener("mouseover", (event) => {
+  if (event.buttons === 2) event.target.style.backgroundColor = "";
+
+  event.target.style.backgroundColor = "black";
+});
