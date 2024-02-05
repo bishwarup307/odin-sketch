@@ -20,6 +20,12 @@ function getGridPixelDimension(canvas, numGrid) {
 }
 
 function createGrids(canvas, numGrid) {
+  // remove previous grids, if any
+  existingGrids = [...canvas.children];
+  existingGrids.forEach((grid) => {
+    canvas.removeChild(grid);
+  });
+
   const placeHolder = document.createDocumentFragment();
   gridDimension = getGridPixelDimension(canvas, numGrid);
 
@@ -29,8 +35,7 @@ function createGrids(canvas, numGrid) {
     grid.setAttribute(
       "style",
       `
-        
-        border: 0.3px solid #e4e4e4;
+        border: 0.3px solid #f4f4f4;
         width: ${gridDimension}px;
         height: ${gridDimension}px
         `
