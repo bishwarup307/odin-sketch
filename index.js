@@ -17,6 +17,7 @@ function createGrids(canvas, numGrid) {
 
   for (let i = 0; i < numGrid ** 2; i++) {
     grid = document.createElement("div");
+    grid.classList.add("grid-cell");
     grid.setAttribute(
       "style",
       `
@@ -48,7 +49,7 @@ canvas.addEventListener("mouseover", (event) => {
   let g = getRandomColorChannel();
   let b = getRandomColorChannel();
 
-  bgColor = `rgb(${r}, ${g}, ${b})`;
-
-  event.target.style.backgroundColor = bgColor;
+  bgColor = `rgba(${r}, ${g}, ${b}, 1)`;
+  if (event.target.classList.contains("grid-cell"))
+    event.target.style.backgroundColor = bgColor;
 });
