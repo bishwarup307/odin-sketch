@@ -7,6 +7,14 @@ function getRandomColorChannel() {
   return Math.floor(Math.random() * 256);
 }
 
+function getRGBColor(r = null, g = null, b = null, opacity = null) {
+  const red = r || getRandomColorChannel();
+  const green = g || getRandomColorChannel();
+  const blue = b || getRandomColorChannel();
+  const alpha = opacity || 0.1;
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+}
+
 function getGridPixelDimension(canvas, numGrid) {
   return parseInt(canvas.offsetWidth / numGrid);
 }
@@ -21,7 +29,7 @@ function createGrids(canvas, numGrid) {
     grid.setAttribute(
       "style",
       `
-        background-color: #fff;
+        
         border: 0.3px solid #e4e4e4;
         width: ${gridDimension}px;
         height: ${gridDimension}px
@@ -45,11 +53,18 @@ createGridBtn.addEventListener("click", () => {
 });
 
 canvas.addEventListener("mouseover", (event) => {
-  let r = getRandomColorChannel();
-  let g = getRandomColorChannel();
-  let b = getRandomColorChannel();
+  // assignedColor will be null when a cell is hovered for the first time
+  // as there's no inline CSS declarations
+  const assignedColor = event.target.style.backgroundColor;
+  let bgColor;
 
-  bgColor = `rgba(${r}, ${g}, ${b}, 1)`;
+  if (assignedColor) {
+    // credit : https://stackoverflow.com/questions/3751877/how-to-extract-r-g-b-a-values-from-css-color
+    let rgba = assignedColor.match(/[.?\d]+/g).map(parseFloat);
+    rgba[3] += 0.1; // increase opacity 10% every time
+    bgColor = getRGBColor(...rgba);
+  } else bgColor = getRGBColor();
+
   if (event.target.classList.contains("grid-cell"))
     event.target.style.backgroundColor = bgColor;
 });
