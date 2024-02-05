@@ -3,6 +3,10 @@ const createGridBtn = document.querySelector("#btn-create-grid");
 
 // const N_ROW = 32;
 
+function getRandomColorChannel() {
+  return Math.floor(Math.random() * 256);
+}
+
 function getGridPixelDimension(canvas, numGrid) {
   return parseInt(canvas.offsetWidth / numGrid);
 }
@@ -40,7 +44,11 @@ createGridBtn.addEventListener("click", () => {
 });
 
 canvas.addEventListener("mouseover", (event) => {
-  // if (event.buttons === 2) event.target.style.backgroundColor = "";
+  let r = getRandomColorChannel();
+  let g = getRandomColorChannel();
+  let b = getRandomColorChannel();
 
-  event.target.style.backgroundColor = "black";
+  bgColor = `rgb(${r}, ${g}, ${b})`;
+
+  event.target.style.backgroundColor = bgColor;
 });
